@@ -25,8 +25,60 @@ namespace gblxe  {
 
 GB::GB()
 {
-    GB_Cpu = new GB_Cpu();
-    // ...
+    cpu     =   new GB_Cpu();
+    memory  =   new GB_Memory();
+    cart    =   new GB_Cart();
+    video   =   new GB_Video();
+    sound   =   new GB_Sound();
+
+    cart_present = false;
+}
+
+
+GB::~GB()
+{
+    if(cpu)  {
+        delete cpu;
+    }
+
+    if(memory)  {
+        delete memory;
+    }
+
+    if(cart)  {
+        delete cart;
+    }
+
+    if(video)  {
+        delete video;
+    }
+
+    if(sound)  {
+        delete sound;
+    }
+}
+
+
+bool
+GB::run()
+{
+    if(! cart_present)  
+        throw(GBException::CART_NOT_PRESENT);
+
+    while(1)  {
+        cpu->fetch();
+        cpu->decode();
+        cpu->execute();
+
+        /* TODO */
+    }
+}
+
+
+bool
+GB::insert_cart(std::string& filename)
+{
+    return cart.loadRom(filename);
 }
 
 

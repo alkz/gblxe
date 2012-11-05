@@ -17,38 +17,29 @@
 ****************************************************************************/
 
 
-#ifndef __GBLXE_GB_HPP__
-#define __GBLXE_GB_HPP__
-
-
-#include "GBException.hpp"
+#ifndef __GBLXE_GBEXCEPTION_HPP__
+#define __GBLXE_GBEXCEPTION_HPP__
 
 
 namespace gblxe  {
 
 
-class GB
+class GBException : public std::exception
 {
     public:
-        GB();
-        ~GB();
+        static const unsigned int CART_NOT_PRESENT       =    1001;
+        static const unsigned int CANNOT_OPEN_ROM_FILE   =    1002;
+        static const unsigned int WRONG_NINTENDO_LOGO    =    1003;
 
-        void run() throw(GBException);
+    public:
+        GBException(unsigned int);
+        virtual ~GBException() throw();
 
-        void insert_cart(std::string&) throw(GBException);
+        virtual const char* what() const throw();
 
     private:
-        GB_Cpu*      CPU;
-        GB_Memory*   memory;
-        GB_Cart*     cart;
-        GB_Video*    video;
-        GB_Sound*    sound;
-
-        bool cart_present;
+        std::string description;
 };
-
-
-}
 
 
 #endif

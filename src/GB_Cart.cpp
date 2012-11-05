@@ -17,38 +17,52 @@
 ****************************************************************************/
 
 
-#ifndef __GBLXE_GB_HPP__
-#define __GBLXE_GB_HPP__
-
-
-#include "GBException.hpp"
+#include "GB_Cart.hpp"
 
 
 namespace gblxe  {
 
 
-class GB
+GB_Cart::GB_Cart()
 {
-    public:
-        GB();
-        ~GB();
-
-        void run() throw(GBException);
-
-        void insert_cart(std::string&) throw(GBException);
-
-    private:
-        GB_Cpu*      CPU;
-        GB_Memory*   memory;
-        GB_Cart*     cart;
-        GB_Video*    video;
-        GB_Sound*    sound;
-
-        bool cart_present;
-};
-
-
+    is_loaded = false;
+    type = ROMType::NONE;
+    romSize = 0;
+    ramSize = 0;
 }
 
 
-#endif
+GB_Cart::~GB_Cart()
+{
+}
+
+
+void
+GB_Cart::loadRom(std::string& filename)
+{
+    std::ifstream f(filename.c_str());
+
+    if(f.is_open())  {
+        f.seekg(0, std::ios::end);
+        romSize = f.tellf();
+        f.seekg(0);
+
+        f.read(data, romSize);
+
+        // Check nintendo logo (0x0104-0x0134)
+        f.seekg(0x104);
+        for(int i = 0; i < (0x0134-0x0104)+1; i++)  {
+            if(data[i] != nintendo_logo[i])  {
+                throw(GBException::WRONG_NINTENDO_LOGO);
+            }
+        }
+
+        // ...
+
+    } else  {
+        throw(GBException::CANNOT_OPEN_ROM_FILE);
+    }
+}
+
+
+}

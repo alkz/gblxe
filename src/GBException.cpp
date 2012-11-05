@@ -17,38 +17,42 @@
 ****************************************************************************/
 
 
-#ifndef __GBLXE_GB_HPP__
-#define __GBLXE_GB_HPP__
-
-
 #include "GBException.hpp"
 
 
 namespace gblxe  {
 
-
-class GB
+GBException::GBException(unsigned int code)
 {
-    public:
-        GB();
-        ~GB();
+    switch(code)  {
+        case CART_NOT_PRESENT:
+            description = "Game Boy cartridge is not present, call insert_cart(filename) method.";
+            break;
 
-        void run() throw(GBException);
+        case CANNOT_OPEN_ROM_FILE:
+            description = "Cannot Open rom file, check path or permissions.";
+            break;
 
-        void insert_cart(std::string&) throw(GBException);
+        case WRONG_NINTENDO_LOGO:
+            description = "Incorrect Rom file(Bad NintendoLogo).";
+            break;
 
-    private:
-        GB_Cpu*      CPU;
-        GB_Memory*   memory;
-        GB_Cart*     cart;
-        GB_Video*    video;
-        GB_Sound*    sound;
-
-        bool cart_present;
-};
-
-
+        default:
+            description = "You did it wrong.";
+    }
 }
 
 
-#endif
+GBException::~GBException()
+{
+}
+
+
+const char*
+GBException::what()
+{
+    return descprition.c_str();
+}
+
+
+}
