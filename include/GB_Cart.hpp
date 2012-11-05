@@ -65,7 +65,6 @@ class GB_Cart
             };
 
     private:
-        
         static const unsigned char nintento_logo[] =
                     {
                     "\xce\xed\x66\x66\xcc\x0d\x00\x0b\x03\x73\x00\x83"
