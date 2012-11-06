@@ -59,11 +59,12 @@ GB::~GB()
 }
 
 
-bool
+void
 GB::run()
+throw(GBException)
 {
     if(! cart_present)  
-        throw(GBException::CART_NOT_PRESENT);
+        throw( GBException(GBException::CART_NOT_PRESENT) );
 
     while(1)  {
         cpu->fetch();
@@ -75,10 +76,11 @@ GB::run()
 }
 
 
-bool
-GB::insert_cart(std::string& filename)
+void
+GB::insert_cart(const std::string& filename)
+throw(GBException)
 {
-    return cart.loadRom(filename);
+    cart.loadRom(filename);
 }
 
 

@@ -35,7 +35,7 @@ class GB
 
         void run() throw(GBException);
 
-        void insert_cart(std::string&) throw(GBException);
+        void insert_cart(const std::string&) throw(GBException);
 
     private:
         GB_Cpu*      CPU;

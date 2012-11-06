@@ -21,6 +21,9 @@
 #define __GBLXE_GBEXCEPTION_HPP__
 
 
+#include <string>
+
+
 namespace gblxe  {
 
 
@@ -30,6 +33,7 @@ class GBException : public std::exception
         static const unsigned int CART_NOT_PRESENT       =    1001;
         static const unsigned int CANNOT_OPEN_ROM_FILE   =    1002;
         static const unsigned int WRONG_NINTENDO_LOGO    =    1003;
+        static const unsigned int BAD_HEADER_CHECKSUM    =    1004;
 
     public:
         GBException(unsigned int);
@@ -42,4 +46,5 @@ class GBException : public std::exception
 };
 
 
+}
 #endif

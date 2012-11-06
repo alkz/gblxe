@@ -37,6 +37,10 @@ GBException::GBException(unsigned int code)
             description = "Incorrect Rom file(Bad NintendoLogo).";
             break;
 
+        case BAD_HEADER_CHECKSUM:
+            description = "Incorrect Rom file(Bad Header checksum).";
+            break;
+
         default:
             description = "You did it wrong.";
     }
@@ -44,14 +48,16 @@ GBException::GBException(unsigned int code)
 
 
 GBException::~GBException()
+throw()
 {
 }
 
 
 const char*
-GBException::what()
+GBException::what() const
+throw()
 {
-    return descprition.c_str();
+    return description.c_str();
 }
 
 

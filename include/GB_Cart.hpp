@@ -22,6 +22,7 @@
 
 
 #include <fstream>
+#include <string>
 
 #include "GBException.hpp"
 
@@ -64,27 +65,22 @@ class GB_Cart
             NONE
             };
 
-    private:
-        static const unsigned char nintento_logo[] =
-                    {
-                    "\xce\xed\x66\x66\xcc\x0d\x00\x0b\x03\x73\x00\x83"
-                    "\x00\x0c\x00\x0d\x00\x08\x11\x1f\x88\x89\x00\x0e"
-                    "\xdc\xcc\x6e\xe6\xdd\xdd\xd9\x99\xbb\xbb\x67\x63"
-                    "\x6e\x0e\xec\xcc\xdd\xdc\x99\x9f\xbb\xb9\x33\x3e"
-                    };
 
     public:
         GB_Cart();
         ~GB_Cart();
 
-        void loadRom(std::string&) throw(GBException);
+        void loadRom(const std::string&) throw(GBException);
 
     private:
         ROMType type;
 
         unsigned long romSize;
         unsigned long ramSize;
+        unsigned long fileSize;
+
         std::string title;
+        unsigned char cgb;
 
         unsigned char* data;
 
