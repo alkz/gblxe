@@ -6,7 +6,7 @@ CFLAGS=-g -std=c++0x -pedantic
 all: gblxe
 
 gblxe: GB.o GB_Cart.o GBException.o
-	$(CC) GB.o GB_Cart.o GBException.o testCart.o -o gblxe
+	$(CC) GB.o GB_Cart.o GBException.o  -o gblxe
 
 GB.o:        src/GB.cpp  include/GB.hpp
 	$(CC)  $(INCLUDES) -c   src/GB.cpp             -o  obj/GB.o
