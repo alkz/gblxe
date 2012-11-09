@@ -17,73 +17,43 @@
 ****************************************************************************/
 
 
-#include "GB.hpp"
+#ifndef __GBLXE_GB_CPU_HPP__
+#define __GBLXE_GB_CPU_HPP__
+
+
+#include <bitset>
 
 
 namespace gblxe  {
 
 
-GB::GB()
+class GB_Cpu
 {
-    cpu     =   new GB_Cpu();
-    memory  =   new GB_Memory();
-    cart    =   new GB_Cart();
-    video   =   new GB_Video();
-    sound   =   new GB_Sound();
+    typedef  Register     std::bitset<16>;
 
-    cart_present = false;
-}
+    public:
+        GB_Cpu();
+        ~GB_Cpu();
 
+        void fetch();
+        void decode();
+        void execute();
 
-GB::~GB()
-{
-    if(cpu)  {
-        delete cpu;
-    }
+        void reset();
 
-    if(memory)  {
-        delete memory;
-    }
+    private:
+        Register AF;
+        Register BC;
+        Register DE;
+        Register HL;
+        Register SP;
+        Register PC; 
 
-    if(cart)  {
-        delete cart;
-    }
-
-    if(video)  {
-        delete video;
-    }
-
-    if(sound)  {
-        delete sound;
-    }
-}
-
-
-void
-GB::run()
-throw(GBException)
-{
-    if(! cart_present)  
-        throw( GBException(GBException::CART_NOT_PRESENT) );
-
-    cpu->init();
-
-    while(1)  {
-        cpu->fetch();
-        cpu->decode();
-        cpu->execute();
-
-        /* TODO */
-    }
-}
-
-
-void
-GB::insert_cart(const std::string& filename)
-throw(GBException)
-{
-    cart.loadRom(filename);
-}
+        GB_Memory* memory;
+};
 
 
 }
+
+
+#endif
