@@ -31,9 +31,6 @@ GB_Cpu::GB_Cpu(GB_Memory* mem)
 GB_Cpu::~GB_Cpu()
 {
     memory = NULL;
-    video = NULL;
-    snd = NULL;
-    cart = NULL;
 }
 
 
@@ -43,7 +40,7 @@ GB_Cpu::reset()
     AF = 0x01b0;
     BC = 0x0013;
     DE = 0x00d8;
-    HL = 0X014d;
+    HL = 0x014d;
     SP = 0xfffe;
     PC = 0x0100;
 
