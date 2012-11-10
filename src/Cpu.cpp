@@ -42,55 +42,99 @@ void
 Cpu::reset()
 {
     is_halted = false;
+    total_cycles = 0;
+    interrupt_enabled = true;
 
-    AF = 0x01b0;
-    BC = 0x0013;
-    DE = 0x00d8;
-    HL = 0x014d;
-    SP = 0xfffe;
-    PC = 0x0100;
+    register_file[AF] = 0x01b0;
+    register_file[BC] = 0x0013;
+    register_file[DE] = 0x00d8;
+    register_file[HL] = 0x014d;
+    register_file[SP] = 0xfffe;
+    register_file[PC] = 0x0100;
+
 
     // HW registers
-    memory[0xff05] = 0;          // TIMA
-    memory[0xff05] = 0;          // TIMA
-    memory[0xff05] = 0;          // TIMA
-    memory[0xff06] = 0;          // TMA
-    memory[0xff07] = 0;          // TAC
-    memory[0xff10] = 0x0080;     // NR10
-    memory[0xff11] = 0x00bf;     // NR11
-    memory[0xff12] = 0x00f3;     // NR12
-    memory[0xff14] = 0x00bf;     // NR14
-    memory[0xff16] = 0x003f;     // NR21
-    memory[0xff17] = 0;          // NR22
-    memory[0xff19] = 0x00bf;     // NR24
-    memory[0xff11] = 0x007f;     // NR30
-    memory[0xff1b] = 0x00ff;     // NR31
-    memory[0xff1c] = 0x009f;     // NR32
-    memory[0xff1e] = 0x00bf;     // NR33
-    memory[0xff20] = 0x00ff;     // NR41
-    memory[0xff21] = 0;          // NR42
-    memory[0xff22] = 0;          // NR43
-    memory[0xff23] = 0x00bf;     // NR30
-    memory[0xff24] = 0x0077;     // NR50
-    memory[0xff25] = 0x00f3;     // NR51
-    memory[0xff26] = 0x00f1;     // NR52
-    memory[0xff40] = 0x0091;     // LCDC
-    memory[0xff42] = 0;          // SCY
-    memory[0xff43] = 0;          // SCX
-    memory[0xff45] = 0;          // LYC
-    memory[0xff47] = 0x00fc;     // BGP
-    memory[0xff48] = 0x00ff;     // OBP0
-    memory[0xff49] = 0x00ff;     // OBP1
-    memory[0xff4a] = 0;          // WY
-    memory[0xff4b] = 0;          // WX
-    memory[0xffff] = 0;          // IE
+    memory[TIMA] = 0;          // TIMA
+    memory[TMA] = 0;           // TMA
+    memory[TAC] = 0;           // TAC
+    memory[NR10] = 0x0080;     // NR10
+    memory[NR11] = 0x00bf;     // NR11 
+    memory[NR12] = 0x00f3;     // NR12
+    memory[NR14] = 0x00bf;     // NR14
+    memory[NR21] = 0x003f;     // NR21
+    memory[NR22] = 0;          // NR22
+    memory[NR24] = 0x00bf;     // NR24
+    memory[NR30] = 0x007f;     // NR30
+    memory[NR31] = 0x00ff;     // NR31
+    memory[NR32] = 0x009f;     // NR32
+    memory[NR33] = 0x00bf;     // NR33
+    memory[NR41] = 0x00ff;     // NR41
+    memory[NR42] = 0;          // NR42 
+    memory[NR42] = 0;          // NR43
+    memory[NR30] = 0x00bf;     // NR30
+    memory[NR50] = 0x0077;     // NR50
+    memory[NR51] = 0x00f3;     // NR51
+    memory[NR52] = 0x00f1;     // NR52
+    memory[LCDC] = 0x0091;     // LCDC
+    memory[SCY] = 0;           // SCY
+    memory[SCX] = 0;           // SCX
+    memory[LYC] = 0;           // LYC
+    memory[BGP] = 0x00fc;      // BGP
+    memory[OBP0] = 0x00ff;     // OBP0
+    memory[OBP1] = 0x00ff;     // OBP1
+    memory[WY] = 0;            // WY
+    memory[WX] = 0;            // WX
+    memory[IE] = 0;            // IE
 }
 
 
 void
 Cpu::execute()
 {
-
 }
+
+
+
+
+/* ====================== __Instruction Set__  */
+
+void
+Cpu::NOP()
+{
+    cycles = 4;
+    total_cycles += 4;
+    instr_length = 1;
+}
+
+
+void
+Cpu::STOP()
+{
+    is_stopped = true;
+
+    cycles = 4;
+    total_cycles += 4;
+    instr_length = 2;
+}
+
+
+void
+Cpu::HALT()
+{
+    is_halted = true;
+
+    cycles = 4;
+    total_cycles += 4;
+    instr_length = 1;
+}
+
+
+void
+Cpu::DI()
+{
+}
+
+
+
 
 }
