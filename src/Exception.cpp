@@ -17,69 +17,46 @@
 ****************************************************************************/
 
 
-#include "GB.hpp"
-
+#include "Exception.hpp"
 
 namespace gblxe  {
 
-GB::GB()
+Exception::Exception(unsigned int code)
 {
-    cpu     =   new Cpu();
-    memory  =   new Memory();
-    cart    =   new Cart();
-    video   =   new Video();
-    sound   =   new Sound();
+    switch(code)  {
+        case CART_NOT_PRESENT:
+            description = "Game Boy cartridge is not present, call insert_cart(filename) method.";
+            break;
 
-    cart_present = false;
-}
+        case CANNOT_OPEN_ROM_FILE:
+            description = "Cannot Open rom file, check path or permissions.";
+            break;
 
+        case WRONG_NINTENDO_LOGO:
+            description = "Incorrect Rom file(Bad NintendoLogo).";
+            break;
 
-GB::~GB()
-{
-    if(cpu)  {
-        delete cpu;
-    }
+        case BAD_HEADER_CHECKSUM:
+            description = "Incorrect Rom file(Bad Header checksum).";
+            break;
 
-    if(memory)  {
-        delete memory;
-    }
-
-    if(cart)  {
-        delete cart;
-    }
-
-    if(video)  {
-        delete video;
-    }
-
-    if(sound)  {
-        delete sound;
+        default:
+            description = "You did it wrong.";
     }
 }
 
 
-void
-GB::run()
-throw(Exception)
+Exception::~Exception()
+throw()
 {
-    if(! cart_present)  
-        throw( Exception(Exception::CART_NOT_PRESENT) );
-
-    cpu->init();
-
-    while(1)  {
-        cpu->execute();
-
-        /* TODO */
-    }
 }
 
 
-void
-GB::insert_cart(const std::string& filename)
-throw(Exception)
+const char*
+Exception::what() const
+throw()
 {
-    cart.loadRom(filename);
+    return description.c_str();
 }
 
 }

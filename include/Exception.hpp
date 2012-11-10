@@ -17,69 +17,31 @@
 ****************************************************************************/
 
 
-#include "GB.hpp"
+#ifndef __GBLXE_GBEXCEPTION_HPP__
+#define __GBLXE_GBEXCEPTION_HPP__
 
+#include <string>
 
 namespace gblxe  {
 
-GB::GB()
+class Exception : public std::exception
 {
-    cpu     =   new Cpu();
-    memory  =   new Memory();
-    cart    =   new Cart();
-    video   =   new Video();
-    sound   =   new Sound();
+    public:
+        static const unsigned int CART_NOT_PRESENT       =    1001;
+        static const unsigned int CANNOT_OPEN_ROM_FILE   =    1002;
+        static const unsigned int WRONG_NINTENDO_LOGO    =    1003;
+        static const unsigned int BAD_HEADER_CHECKSUM    =    1004;
 
-    cart_present = false;
-}
+    public:
+        Exception(unsigned int);
+        virtual ~Exception() throw();
 
+        virtual const char* what() const throw();
 
-GB::~GB()
-{
-    if(cpu)  {
-        delete cpu;
-    }
-
-    if(memory)  {
-        delete memory;
-    }
-
-    if(cart)  {
-        delete cart;
-    }
-
-    if(video)  {
-        delete video;
-    }
-
-    if(sound)  {
-        delete sound;
-    }
-}
-
-
-void
-GB::run()
-throw(Exception)
-{
-    if(! cart_present)  
-        throw( Exception(Exception::CART_NOT_PRESENT) );
-
-    cpu->init();
-
-    while(1)  {
-        cpu->execute();
-
-        /* TODO */
-    }
-}
-
-
-void
-GB::insert_cart(const std::string& filename)
-throw(Exception)
-{
-    cart.loadRom(filename);
-}
+    private:
+        std::string description;
+};
 
 }
+
+#endif

@@ -17,69 +17,19 @@
 ****************************************************************************/
 
 
-#include "GB.hpp"
+#ifndef __GBLXE_TYPES_HPP__
+#define __GBLXE_TYPES_HPP__ 
 
+#include <bitset>
 
 namespace gblxe  {
 
-GB::GB()
-{
-    cpu     =   new Cpu();
-    memory  =   new Memory();
-    cart    =   new Cart();
-    video   =   new Video();
-    sound   =   new Sound();
-
-    cart_present = false;
-}
-
-
-GB::~GB()
-{
-    if(cpu)  {
-        delete cpu;
-    }
-
-    if(memory)  {
-        delete memory;
-    }
-
-    if(cart)  {
-        delete cart;
-    }
-
-    if(video)  {
-        delete video;
-    }
-
-    if(sound)  {
-        delete sound;
-    }
-}
-
-
-void
-GB::run()
-throw(Exception)
-{
-    if(! cart_present)  
-        throw( Exception(Exception::CART_NOT_PRESENT) );
-
-    cpu->init();
-
-    while(1)  {
-        cpu->execute();
-
-        /* TODO */
-    }
-}
-
-
-void
-GB::insert_cart(const std::string& filename)
-throw(Exception)
-{
-    cart.loadRom(filename);
-}
+typedef  Register    std::bitset<16>;
+typedef  u8          unsigned char;
+typedef  s8          char;
+typedef  u16         unsigned short;
+typedef  s16         short;
 
 }
+
+#endif

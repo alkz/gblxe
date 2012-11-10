@@ -17,69 +17,14 @@
 ****************************************************************************/
 
 
-#include "GB.hpp"
-
+#include "InstructionSet.hpp"
 
 namespace gblxe  {
 
-GB::GB()
-{
-    cpu     =   new Cpu();
-    memory  =   new Memory();
-    cart    =   new Cart();
-    video   =   new Video();
-    sound   =   new Sound();
+namespace InstructionSet  {
 
-    cart_present = false;
-}
+// TODO Implement my god so many istruction :P
 
-
-GB::~GB()
-{
-    if(cpu)  {
-        delete cpu;
-    }
-
-    if(memory)  {
-        delete memory;
-    }
-
-    if(cart)  {
-        delete cart;
-    }
-
-    if(video)  {
-        delete video;
-    }
-
-    if(sound)  {
-        delete sound;
-    }
-}
-
-
-void
-GB::run()
-throw(Exception)
-{
-    if(! cart_present)  
-        throw( Exception(Exception::CART_NOT_PRESENT) );
-
-    cpu->init();
-
-    while(1)  {
-        cpu->execute();
-
-        /* TODO */
-    }
-}
-
-
-void
-GB::insert_cart(const std::string& filename)
-throw(Exception)
-{
-    cart.loadRom(filename);
 }
 
 }

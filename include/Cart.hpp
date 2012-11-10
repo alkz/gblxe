@@ -17,32 +17,72 @@
 ****************************************************************************/
 
 
-#ifndef __GBLXE_GB_HPP__
-#define __GBLXE_GB_HPP__
+#ifndef __GBLXE_CART_HPP__
+#define __GBLXE_CART_HPP__
+
+#include <fstream>
+#include <string>
 
 #include "Types.hpp"
 #include "Exception.hpp"
 
 namespace gblxe  {
 
-class GB
+class Cart
 {
     public:
-        GB();
-        ~GB();
+        enum ROMType 
+            { 
+            ROM_ONLY,
+            ROM_MBC1,                 
+            ROM_MBC1_RAM,
+            ROM_MBC1_RAM_BATT,
+            ROM_MBC,
+            ROM_MBC2_BATTERY,        
+            ROM_RAM,        
+            ROM_RAM_BATTERY,         
+            ROM_MMM01,         
+            ROM_MMM01_SRAM,          
+            ROM_MMM01_SRAM_BATT,
+            ROM_MBC3_TIMER_BATT,     
+            ROM_MBC3_TIMER_RAM_BATT,
+            ROM_MBC3,
+            ROM_MBC3_RAM,
+            ROM_MBC3_RAM_BATT,
+            ROM_MBC5,
+            ROM_MBC5_RAM,
+            ROM_MBC5_RAM_BATT,
+            ROM_MBC5_RUMBLE,
+            ROM_MBC5_RUMBLE_SRAM,
+            ROM_MBC5_RUMBLE_SRAM_BATT,
+            Pocket_Camera,
+            Bandai_TAMA5,
+            Hudson_HuC_1,
+            Hudson_HuC_3,
 
-        void run() throw(Exception);
+            NONE
+            };
 
-        void insert_cart(const std::string&) throw(Exception);
+
+    public:
+        Cart();
+        ~Cart();
+
+        void loadRom(const std::string&) throw(Exception);
 
     private:
-        Cpu*      CPU;
-        Memory*   memory;
-        Cart*     cart;
-        Video*    video;
-        Sound*    sound;
+        ROMType type;
 
-        bool cart_present;
+        unsigned long romSize;
+        unsigned long ramSize;
+        unsigned long fileSize;
+
+        std::string title;
+        u8 cgb;
+
+        u8* data;
+
+        bool is_loaded;
 };
 
 }
