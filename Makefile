@@ -24,3 +24,4 @@ Exception.o:   src/Exception.cpp   include/Exception.hpp
 clean:
 	rm -rf ./obj/*.o 
 	rm -f  gblxe
+
