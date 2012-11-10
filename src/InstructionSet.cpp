@@ -21,10 +21,18 @@
 
 namespace gblxe  {
 
-namespace InstructionSet  {
+int
+InstructionSet::NOP()
+{
+    return 4;
+}
 
-// TODO Implement my god so many istruction :P
 
+int
+InstructionSet::STOP()
+{
+    /* TODO */
+    return 4;
 }
 
 }

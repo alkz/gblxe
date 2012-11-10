@@ -38,132 +38,163 @@ class InstructionSet()
          * a8  means 8 bit unsigned data, which are added to $FF00 in certain instructions
          * a16 means 16 bit address
          * s8  means 8 bit signed data, which are added to program counter
+         *
+         * Instruction returns machine cycles needed
          */
         
-        static void NOP();
-        static void STOP();
-        static void HALT();
-        static void DI();
-        static void EI();
+        static int NOP();
+        static int STOP();
+        static int HALT();
+        static int DI();
+        static int EI();
 
-        static void LD_r16_d16(Register&, u16); 
-        static void LD_ra16_r8(u16&, Register&);
-        static void LD_a16_r16(u16&, Register&);
-        static void LD_r8_ra16(Register&, u16);
-        static void LD_r8_d8(Register&, u8);
-        static void LD_r8_r8(Register&, Register&);
-        static void LD_r8_ra16(Register&, u8);
-        static void LD_ra16+_r8(Register&, u8);
-        static void LD_ra16-_r8(Register&, u8);
-        static void LD_r8_ra16+(u8&, Register&);
-        static void LD_r8_ra16-(u8&, Register&);
+        static int LD_r16_d16(Register&, u16); 
+        static int LD_ra16_r8(u16&, Register&);
+        static int LD_a16_r16(u16&, Register&);
+        static int LD_r8_ra16(Register&, u16);
+        static int LD_r8_d8(Register&, u8);
+        static int LD_r8_r8(Register&, Register&);
+        static int LD_r8_ra16(Register&, u8);
+        static int LD_ra16+_r8(Register&, u8);
+        static int LD_ra16-_r8(Register&, u8);
+        static int LD_r8_ra16+(u8&, Register&);
+        static int LD_r8_ra16-(u8&, Register&);
 
-        static void LDH_a8_A(u8*, Register&);
-        static void LDH_A_a8(Register&, u8*);
-        static void LDH_a16_A(u16*, Register&);
-        static void LDH_A_a16(Register&, u16*);
+        static int LDH_a8_A(u8*, Register&);
+        static int LDH_A_a8(Register&, u8*);
+        static int LDH_a16_A(u16*, Register&);
+        static int LDH_A_a16(Register&, u16*);
 
-        static void LD_HL_SP+s8(Register&, Register&, s8);
-        static void LD_r16_r16(Register&, Register&);
+        static int LD_HL_SP+s8(Register&, Register&, s8);
+        static int LD_r16_r16(Register&, Register&);
 
-        static void INC_r16(Register&); 
-        static void INC_ra16(u16&); 
-        static void DEC_r16(Register&);
-        static void DEC_r8(Register&);
-        static void INC_r8(Register&); 
-
-        // Implicit destination A register(first param)
-        static void RLCA(Register&);
-        static void RRCA(Register&);
-        static void RLA(Register&);
-        static void RRA(Register&);
+        static int INC_r16(Register&); 
+        static int INC_ra16(u16&); 
+        static int DEC_r16(Register&);
+        static int DEC_r8(Register&);
+        static int INC_r8(Register&); 
 
         // Implicit destination A register(first param)
-        static void CPL(Register&);
-        static void CCF(Register&);
-        static void DAA(Register&);
-        static void SCF(Register&);
-
-        static void ADD_r8_r8(Register&, Register&);
-        static void ADD_r8_ra16(Register&, u16);
-        static void ADD_r16_r16(Register&, Register&);
-        static void ADD_r8_d8(Register&, u8);
-        static void ADD_r8_s8(Register&, s8);
+        static int RLCA(Register&);
+        static int RRCA(Register&);
+        static int RLA(Register&);
+        static int RRA(Register&);
 
         // Implicit destination A register(first param)
-        static void SUB_r8(Register&, Register&);
-        static void SUB_ra16(Register&, u16);
-        static void SUB_d8(Register&, u8);
+        static int CPL(Register&);
+        static int CCF(Register&);
+        static int DAA(Register&);
+        static int SCF(Register&);
+
+        static int ADD_r8_r8(Register&, Register&);
+        static int ADD_r8_ra16(Register&, u16);
+        static int ADD_r16_r16(Register&, Register&);
+        static int ADD_r8_d8(Register&, u8);
+        static int ADD_r8_s8(Register&, s8);
 
         // Implicit destination A register(first param)
-        static void AND_r8(Register&, Register&);
-        static void AND_ra16(Register&, u16);
-        static void AND_d8(Register&, u8);
+        static int SUB_r8(Register&, Register&);
+        static int SUB_ra16(Register&, u16);
+        static int SUB_d8(Register&, u8);
 
         // Implicit destination A register(first param)
-        static void XOR_r8(Register&, Register&);
-        static void XOR_ra16(Register&, u16);
-        static void XOR_d8(Register&, u8);
+        static int AND_r8(Register&, Register&);
+        static int AND_ra16(Register&, u16);
+        static int AND_d8(Register&, u8);
 
         // Implicit destination A register(first param)
-        static void OR_r8(Register&, Register&);
-        static void OR_ra16(Register&, u16);
-        static void OR_d8(Register&, u8);
+        static int XOR_r8(Register&, Register&);
+        static int XOR_ra16(Register&, u16);
+        static int XOR_d8(Register&, u8);
 
         // Implicit destination A register(first param)
-        static void CP_r8(Register&, Register&);
-        static void CP_ra16(Register&, u16);
-        static void CP_d8(Register&, u8);
+        static int OR_r8(Register&, Register&);
+        static int OR_ra16(Register&, u16);
+        static int OR_d8(Register&, u8);
 
-        static void ADC_r8_r8(Register&, Register&);
-        static void ADC_r8_ra16(Register&, u16);
-        static void ADC_r8_r8(Register&, u8);
+        // Implicit destination A register(first param)
+        static int CP_r8(Register&, Register&);
+        static int CP_ra16(Register&, u16);
+        static int CP_d8(Register&, u8);
 
-        static void SBC_r8_r8(Register&, Register&);
-        static void SBC_r8_ra16(Register&, u16);
-        static void SBC_r8_d8(Register&, u8);
+        static int ADC_r8_r8(Register&, Register&);
+        static int ADC_r8_ra16(Register&, u16);
+        static int ADC_r8_r8(Register&, u8);
+
+        static int SBC_r8_r8(Register&, Register&);
+        static int SBC_r8_ra16(Register&, u16);
+        static int SBC_r8_d8(Register&, u8);
 
         // Jumps
         
         // Pass register AF to check bit Z
-        static void JR_NZ_s8(Register&, Register&, s8);
-        static void JR_NC_s8(Register&, Register&, s8);
-        static void JR_Z_s8(Register&, Register&, s8);
-        static void JR_C_s8(Register&, Register&, s8);
-        static void JP_NZ_a16(Register&, Register&, u16);
-        static void JP_NC_a16(Register&, Register&, u16);
-        static void JP_Z_a16(Register&, Register&, u16);
-        static void JP_C_a16(Register&, Register&, u16);
+        static int JR_NZ_s8(Register&, Register&, s8);
+        static int JR_NC_s8(Register&, Register&, s8);
+        static int JR_Z_s8(Register&, Register&, s8);
+        static int JR_C_s8(Register&, Register&, s8);
+        static int JP_NZ_a16(Register&, Register&, u16);
+        static int JP_NC_a16(Register&, Register&, u16);
+        static int JP_Z_a16(Register&, Register&, u16);
+        static int JP_C_a16(Register&, Register&, u16);
 
-        static void JR_s8(Register&, Register&);
-        static void JP_a16(Register&, u16);
-        static void JP_ra16(Register&, u16);
+        static int JR_s8(Register&, Register&);
+        static int JP_a16(Register&, u16);
+        static int JP_ra16(Register&, u16);
        
         // Pass register AF to check bit Z, and PC
-        static void RET_NZ(Register&, Register&);
-        static void RET_NC(Register&, Register&);
-        static void RET_Z(Register&, Register&);
-        static void RET_C(Register&, Register&);
+        static int RET_NZ(Register&, Register&);
+        static int RET_NC(Register&, Register&);
+        static int RET_Z(Register&, Register&);
+        static int RET_C(Register&, Register&);
 
-        static void RETI(Register&);
+        static int RETI(Register&);
 
         // Pass SP, and PC
-        static void CALL_a16(Register&, Register&);
-        static void CALL_NZ_a16(Register&, Register&, Register&);
-        static void CALL_NC_a16(Register&, Register&, Register&);
-        static void CALL_Z_a16(Register&, Register&, Register&);
-        static void CALL_C_a16(Register&, Register&, Register&);
+        static int CALL_a16(Register&, Register&);
+        static int CALL_NZ_a16(Register&, Register&, Register&);
+        static int CALL_NC_a16(Register&, Register&, Register&);
+        static int CALL_Z_a16(Register&, Register&, Register&);
+        static int CALL_C_a16(Register&, Register&, Register&);
 
 
         // Stack 
 
         // Pass SP
-        static void POP_r16(Register&, Register&);
-        static void PUSH_r16(Register&, Register&);
+        static int POP_r16(Register&, Register&);
+        static int PUSH_r16(Register&, Register&);
 
         // Pass SP and PC
-        static void RST_n(Register&, Register&, u8);
+        static int RST_n(Register&, Register&, u8);
 
+
+        // GBC Instructions(Pass even AF register to set flags)
+        static int RLC_r8(Register&, Register&);
+        static int RLC_ra16(Register&, Register&);
+        static int RRC_r8(Register&, Register&);
+        static int RRC_ra16(Register&, Register&);
+
+        static int RL_r8(Register&, Register&);
+        static int RL_ra16(Register&, Register&);
+        static int RR_r8(Register&, Register&);
+        static int RR_ra16(Register&, Register&);
+
+        static int SLA_r8(Register&, Register&);
+        static int SLA_ra16(Register&, Register&);
+        static int SRA_r8(Register&, Register&);
+        static int SRA_ra16(Register&, Register&);
+
+        static int SWAP_r8(Register&, Register&);
+        static int SWAP_ra16(Register&, Register&);
+        static int SRL_r8(Register&, Register&);
+        static int SRL_ra16(Register&, Register&);
+
+        static int BIT_n_r8(Register&, u8, Register&);
+        static int BIT_n_ra16(Register&, u8, Register&);
+
+        static int RES_n_r8(u8, Register&);
+        static int RES_n_ra16(u8, Register&);
+        static int SET_n_r8(u8, Register&);
+        static int SET_n_ra16(u8, Register&);
 };
 
 }

@@ -44,6 +44,8 @@ class Cpu
         Cart*     cart;
         Video*    video;
         Sound*    sound;
+
+        bool is_halted;
 };
 
 }

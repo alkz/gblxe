@@ -41,6 +41,8 @@ Cpu::~Cpu()
 void
 Cpu::reset()
 {
+    is_halted = false;
+
     AF = 0x01b0;
     BC = 0x0013;
     DE = 0x00d8;
@@ -85,10 +87,10 @@ Cpu::reset()
 }
 
 
-
 void
 Cpu::execute()
 {
+
 }
 
 }
