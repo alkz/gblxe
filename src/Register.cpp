@@ -17,31 +17,48 @@
 ****************************************************************************/
 
 
-#ifndef __GBLXE_EXCEPTION_HPP__
-#define __GBLXE_EXCEPTION_HPP__
-
-#include <string>
+#include "Register.hpp"
 
 namespace gblxe  {
 
-class Exception : public std::exception
+std::string
+Register8::toString() const
 {
-    public:
-        static const unsigned int CART_NOT_PRESENT       =    1001;
-        static const unsigned int CANNOT_OPEN_ROM_FILE   =    1002;
-        static const unsigned int WRONG_NINTENDO_LOGO    =    1003;
-        static const unsigned int BAD_HEADER_CHECKSUM    =    1004;
+    u8 tmp = value;
+    std::string toReturn = "";
 
-    public:
-        Exception(unsigned int);
-        virtual ~Exception() throw();
+    while(tmp)  {
+        toReturn += ((tmp%2)+'0');
+        tmp /= 2;
+    }
 
-        virtual const char* what() const throw();
-
-    private:
-        std::string description;
-};
-
+    for(int i = toReturn.length(); i < 8; i++)  {
+        toReturn += "0";
+    }
+    std::reverse(toReturn.begin(), toReturn.end());
+    return toReturn;
 }
 
-#endif
+
+Register16&
+Register16::operator++(int)
+{
+    u16 value = (low.get() + (high.get() << 8))+1;
+    low.set(value & 0xff);
+    high.set( (value >> 8) & 0xff );
+
+    return *this;
+}
+
+
+Register16&
+Register16::operator--(int)
+{
+    u16 value = (low.get() + (high.get() << 8))-1;
+    low.set(value & 0xff);
+    high.set( (value >> 8) & 0xff );
+
+    return *this;
+}
+
+}

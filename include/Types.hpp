@@ -24,7 +24,6 @@
 
 namespace gblxe  {
 
-typedef  Register    std::bitset<16>;
 typedef  u8          unsigned char;
 typedef  s8          char;
 typedef  u16         unsigned short;

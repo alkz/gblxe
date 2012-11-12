@@ -31,10 +31,10 @@ class Cpu
             {
             AF, BC, DE, HL, 
             SP, PC,
-            A = 0, F = 0,
-            B = 1, C = 1,
-            D = 2, E = 2,
-            H = 3, L = 3,
+            A = 0, F,
+            B, C,
+            D, E,
+            H, L,
             TIMA = 0xff05,
             TMA, TAC, 
             NR10 = 0xff10, NR11, NR12, 
@@ -62,7 +62,9 @@ class Cpu
         void reset();
 
     private:
-        Register register_file[8];
+        Register16*  register_file16[6];
+        Register8*   register_file8[8];
+
         int total_cycles;
         int cycles;
         int instr_length;
@@ -104,7 +106,6 @@ class Cpu
          void LD_r8_ra16    (RegisterName, RegisterName);
          void LD_r8_u8      (RegisterName, u8);
          void LD_r8_r8      (RegisterName, RegisterName);
-         void LD_r8_ra16    (RegisterName, RegisterName);
          void LD_ra16+_r8   (RegisterName, RegisterName);
          void LD_ra16-_r8   (RegisterName, RegisterName);
          void LD_r8_ra16+   (RegisterName, RegisterName);
